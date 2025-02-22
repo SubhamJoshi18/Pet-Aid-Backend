@@ -87,6 +87,7 @@ class AuthServices {
 
         const extractedPayload = new Array(checkEmailExists).map((data) => {
             return {
+                userId : data._id,
                 fullName : data.fullName,
                 email : data.email,
                 role : data.userProfile.role,

@@ -27,6 +27,12 @@ class JWTHelper {
         const decodedToken = jwt.sign(payload,secretKey,options)
         return decodedToken  
     }
+
+    async verifyAccessToken(token){
+        const secretKey = process.env.JWT_ACCESS_TOKEN ?? 'access'
+        const decodedPayload =jwt.verify(token,secretKey)
+        return decodedPayload
+    }
 }
 
 
