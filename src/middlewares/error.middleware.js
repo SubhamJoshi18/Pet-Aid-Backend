@@ -1,9 +1,13 @@
-
+import statusCode from "http-status-codes"
 
 const globalErrorHandler = (err, req, res , next) => {
 
-   console.log(err)
-   next()
+   return res.status(statusCode.BAD_GATEWAY).json({
+        error : true,
+        message : err.message,
+        stack : err.stack
+   })
+
 }
 
 

@@ -4,9 +4,10 @@ class HttpException extends Error {
 
     status = 'Pending'
     OperationalError = false
+    statusCode = 0
 
 
-    constructor(message){
+    constructor(message,statusCode){
         super(message)
         this.name = 'HttpExceptions'
         this.message = message

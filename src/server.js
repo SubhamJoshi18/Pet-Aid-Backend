@@ -2,6 +2,7 @@ import express from 'express'
 import { serverRouter } from './router/server.routes.js'
 import { serverMiddleware } from './middlewares/server.middleware.js'
 import { petAidLogger } from './libs/logger.js'
+import connectMongoDB from './database/connect.js'
 
 class MainApp {
 
@@ -25,9 +26,15 @@ class MainApp {
             serverMiddleware(expressApp)
             serverRouter(expressApp)
             try{
-                this.expressApp.listen(this.serverPort,() => {
-                    petAidLogger.info(`Pet Aid Backend Server is running on ${this.serverPort}`)
+                connectMongoDB().then(() => {
+                    petAidLogger.info(`Database Connected SuccessFully`)
+                    this.expressApp.listen(this.serverPort,() => {
+                        petAidLogger.info(`Pet Aid Backend Server is running on ${this.serverPort}`)
+                    })    
+                }).catch((err) => {
+                    petAidLogger.error(`Failed to Connect Database`)
                 })
+                
             }catch(err){
                 petAidLogger.error(`There is some issue while starting the express server`,err)
                 process.exit(0)

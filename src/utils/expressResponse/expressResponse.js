@@ -7,6 +7,17 @@ async function handleNotFoundRoute(req,res){
     })
 }
 
+function sendApiResponse(res,data,message,statusCode){
+    const payload = {
+        data : data,
+        message : message,
+        statusCode : statusCode,
+        error : false
+    }
+    return res.status(statusCode).json(payload)
+}
+
 export {
-    handleNotFoundRoute
+    handleNotFoundRoute,
+    sendApiResponse
 }
