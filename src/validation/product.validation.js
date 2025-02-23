@@ -18,7 +18,13 @@ const updateProductSchema = z.object({
 })
 
 
+const createProductReviewScehma = z.object({
+    reviewComment : z.string(),
+    reviewRating : z.number()
+})
+
 export {
     productCreateSchema,
-    updateProductSchema
+    updateProductSchema,
+    createProductReviewScehma
 }

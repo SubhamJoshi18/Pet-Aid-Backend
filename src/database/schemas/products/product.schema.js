@@ -47,11 +47,10 @@ const productSchema = new mongoose.Schema({
         type : Boolean,
         default : false
      },
-    reviewProduct : {
+    reviewProduct : [{
         type : mongoose.Schema.Types.ObjectId,
         ref : 'ReviewProduct',
-    },
-
+    }],
     corelationId : {
         type : String,
         required : [true,formmatedMongoose('Co-RelationId')]
