@@ -23,6 +23,11 @@ const userSchema = new mongoose.Schema({
     userProfile : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'UserProfile',
+    },
+
+    productWishList : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'ProductWishlist'
     }
 },{
     timestamps : true

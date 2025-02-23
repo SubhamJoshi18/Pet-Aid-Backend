@@ -4,6 +4,10 @@ import statusCode from 'http-status-codes'
 import {v4 as uuidv4} from 'uuid'
 import { productCategory } from "../constants/category.js"
 import { DatabaseExceptions, ValidationExceptions } from "../exceptions/index.js"
+import User from "../database/schemas/user.schema.js"
+import UserProfile from "../database/schemas/userProfile.schema.js"
+import ProductWishlist from "../database/schemas/products/wishlist.schema.js"
+import { petAidLogger } from "../libs/logger.js"
 
 class ProductService {
 
@@ -129,6 +133,105 @@ class ProductService {
         const deletedResult = await Product.updateOne({corelationId : coRelationId},{isDeleted : true},{$new : true})
         return deletedResult.acknowledged && deletedResult.matchedCount > 0 ? {message : `The Product have been deleted`} : {message : null}
     }
+
+    async addProductToWishlist(productId,corelationId,userId){
+        const productDoc = await Product.findOne({
+            $and : [
+                {
+                    _id : productId
+                },
+                {
+                    corelationId : corelationId
+                }
+            ]
+        })
+
+        if(!productDoc) throw new DatabaseExceptions(`The Product Does not Exists`,statusCode.BAD_REQUEST);
+        
+        const userDoc = await User.findOne({
+            _id : userId
+        }).populate('userProfile')
+
+        const userProId = userDoc.userProfile._id
+        const userProfileDoc = await UserProfile.findOne({_id : userProId})
+
+    
+        const userName = userDoc.fullName
+
+        const payloadForWishlist = {
+            addedBy : userName,
+            product : productDoc._id
+        }
+
+        const insertResult = await ProductWishlist.create({
+            addedBy : payloadForWishlist['addedBy'],
+            product : payloadForWishlist['product']
+        })
+
+        const wishListId = insertResult._id
+        const checkCount = userProfileDoc.wishListCount
+
+        const updatedUserWishList = await User.updateOne(
+            { _id: userId },
+            { $push: { productWishList: wishListId } }
+        );
+
+        if(checkCount.toString().startsWith('0')) {
+            petAidLogger.info(`User is adding the Product in the WishList  For the First Time`)
+            userProfileDoc.wishListCount += 1
+            await userProfileDoc.save()
+        }else{
+            userProfileDoc.wishListCount += 1
+            await userProfileDoc.save()
+        }
+        return {
+            data : insertResult,
+            updateResult : updatedUserWishList,
+            message : `${userName} Has Added Product to the Wishlist`
+        }
+    }
+
+    async removeProductFromWishlist(productId,corelationId,userId,wishListId){
+       
+       
+        const productDoc = await Product.findOne({
+            $and : [
+                {
+                    _id : productId
+                },
+                {
+                    corelationId : corelationId
+                }
+            ]
+        })
+
+        if(!productDoc) throw new DatabaseExceptions(`The Product Does not Exists`,statusCode.BAD_REQUEST);
+        
+        const userDoc = await User.findOne({
+            _id : userId
+        }).populate('userProfile')
+
+        const userProId = userDoc.userProfile._id
+        const userProfileDoc = await UserProfile.findOne({_id : userProId})
+
+
+        if(!isProfileExists) throw new DatabaseExceptions(`Profile Does not Exists for the User : ${userDoc._id}`);
+
+        const deletedResult = await ProductWishlist.deleteOne({_id : wishListId})
+
+        const updatedPromise = await Promise.allSettled([
+            UserProfile.updateOne({_id : userProfileDoc._id},{wishListCount : Math.ceil(userProfileDoc.wishListCount - 1 )}),
+            User.updateOne({_id : userId},{$pull : {productWishList : wishListId }})
+        ])
+
+        const filteredRejection = updatedPromise.filter((data) => data.status !== 'fulfilled')
+        if(Array.isArray(filteredRejection) && filteredRejection.length > 0) throw new DatabaseExceptions(`There is some issuing while updating the information`,statusCode.BAD_GATEWAY);
+        return {
+            deletedResult ,
+            message : `The Product has been removed from the WishList`
+        }
+    }
+
 
 }
 

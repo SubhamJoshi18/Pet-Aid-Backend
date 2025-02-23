@@ -165,6 +165,20 @@ class UserService {
             updateResult : null
         }
     }
+
+    async getAllUserProductWishList(userId){
+        const userDoc = await User.findOne({ _id: userId })
+                .populate({
+                    path: 'productWishList',
+                    populate: { path: 'product' }
+                })
+                .lean();
+
+        if(!userDoc) {
+            throw new DatabaseExceptions(`User Does not Exists on the System`,statusCode.BAD_REQUEST)
+        }
+        return userDoc
+    }
 }
 
 export default new UserService()

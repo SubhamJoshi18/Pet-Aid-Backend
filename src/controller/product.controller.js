@@ -50,6 +50,36 @@ class ProductController {
         }
     }
 
+
+    async addProductToWishlist(req,res,next){
+        try{
+            const productId = req.params.productId
+            const corelationId = req.params.corelationId
+            const userId = req.user.userId
+            const apiResponse = await ProductService.addProductToWishlist(productId,corelationId,userId)
+            const contentMessage = `The Product has been added to the WishList`
+            sendApiResponse(res,apiResponse,contentMessage,statusCode.ACCEPTED)
+        }catch(err){
+            next(err)
+        }
+    }
+
+    async removeProductFromWishlist(req,res,next){
+        try{
+            const productId = req.params.productId
+            const corelationId = req.params.corelationId
+            const wishListId = req.params.wishListId
+            const userId = req.user.userId
+            const apiResponse = await ProductService.addProductToWishlist(productId,corelationId,userId,wishListId)
+            const contentMessage = `The Product has been added to the WishList`
+            sendApiResponse(res,apiResponse,contentMessage,statusCode.ACCEPTED)
+        }catch(err){
+            next(err)
+        }
+    }
+
+   
+
 }
 
 

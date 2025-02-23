@@ -51,6 +51,17 @@ class UserController {
         }
     }
 
+    async getUserProductWishlist(req,res,next){
+        try{
+            const userId = req.user.userId
+            const apiResponse = await UserService.getAllUserProductWishList(userId)
+            const messageContent = `Here are the Product WishList`
+            sendApiResponse(res,apiResponse,messageContent,statusCode.ACCEPTED) 
+        }catch(err){
+            next(err)
+        }
+    }
+
 }
 
 export default new UserController()

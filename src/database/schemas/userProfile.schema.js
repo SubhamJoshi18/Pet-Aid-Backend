@@ -44,6 +44,11 @@ const userProfileSchema = new mongoose.Schema(
     isActive : {
       type : Boolean,
       default : true
+    },
+
+    wishListCount : {
+      type : Number,
+      default : 0
     }
   },
   {

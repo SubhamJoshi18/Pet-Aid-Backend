@@ -9,4 +9,14 @@ productRouter.get('/product',verifyAuthToken,checkUserisActive,ProductController
 productRouter.patch('/product/update/:corelationId',verifyAuthToken,checkUserisActive,ProductController.updateProduct)
 productRouter.patch('/product/delete/:corelationId',verifyAuthToken,checkUserisActive,ProductController.deleteProduct)
 
+productRouter.get('/product/search')
+
+productRouter.post('/product/wishlist/:productId/:corelationId',verifyAuthToken,checkUserisActive,ProductController.addProductToWishlist)
+productRouter.delete('/product/wishlist/delete/:productId/:corelationId/:wishListId',verifyAuthToken,checkUserisActive,ProductController.removeProductFromWishlist)
+
+
+
+productRouter.post('/product/review/:productId/:corelationId')
+productRouter.delete('/product/review/:productId/:corelationId')
+
 export default productRouter
