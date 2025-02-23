@@ -16,6 +16,7 @@ productRouter.post('/product/wishlist/:productId/:corelationId',verifyAuthToken,
 productRouter.delete('/product/wishlist/delete/:productId/:corelationId/:wishListId',verifyAuthToken,checkUserisActive,ProductController.removeProductFromWishlist)
 
 
+productRouter.get('/product/review/:productId',verifyAuthToken,checkUserisActive,ProductReviewController.getProductReviews)
 productRouter.post('/product/review/:productId',verifyAuthToken,checkUserisActive,ProductReviewController.addReview)
 productRouter.delete('/product/review/:productId/:reviewId',verifyAuthToken,checkUserisActive,ProductReviewController.deleteReview)
 

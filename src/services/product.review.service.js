@@ -101,6 +101,21 @@ class ProductReviewService {
         const deletedResult = updatedPromise[0]['value']
         return deletedResult
     }
+
+    async getProductReviews(productId){
+        const productDocs = await Product.findOne({
+            _id : productId
+        }).populate({
+            path : 'reviewProduct',
+        })
+
+        if(!productDocs){
+            throw new  DatabaseExceptions(`Product Does not Exists with the Product Id : ${productId}`)
+        }
+        const productReviews = productDocs.reviewProduct
+        const validReviews = Array.isArray(productReviews) && productReviews.length > 0
+        return validReviews ? {productId : productId, productReviews : productReviews, message : `There are Total ${productReviews.length} Reviews`} : {productReviews : [],message : `There are Total 0 Reviews`}
+    }
 }
 
 

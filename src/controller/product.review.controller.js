@@ -31,6 +31,17 @@ class ProductReviewController {
         }
     }
 
+    async getProductReviews(req,res,next){
+        try{
+            const productId = req.params.productId
+            const apiResponse = await ProductReviewService.getProductReviews(productId)
+            const contentMessage = `Product Reviews has been Fetches`
+            sendApiResponse(res,apiResponse,contentMessage,statuscode.ACCEPTED)
+        }catch(err){
+            next(err)
+        }
+    }
+
 }   
 
 export default new ProductReviewController()
