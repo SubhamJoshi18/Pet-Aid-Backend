@@ -31,7 +31,7 @@ class DatabaseExceptions extends HttpException {
     statusCode = 0
 
     constructor(message, statusCode) {
-        super(message)
+        super(message,statusCode)
         this.message  = message
         this.statusCode = statusCode
         this.name = 'Database  Exceptions'
@@ -46,7 +46,7 @@ class ValidationExceptions extends HttpException {
     statusCode = 0
 
     constructor(message, statusCode) {
-        super(message)
+        super(message,statusCode)
         this.message  = message
         this.statusCode = statusCode
         this.name = 'Validation  Exceptions'
@@ -56,7 +56,22 @@ class ValidationExceptions extends HttpException {
 }
 
 
+class BadGatewayExceptions extends HttpException {
+    message = ''
+    statusCode = 0
+
+    constructor(message,statusCode) {
+        super(message,statusCode)
+        this.message = message
+        this.statusCode = statusCode
+        this.name = 'Bad Gateway Exceptions'
+        Object.setPrototypeOf(this,new.target.prototype)
+    }
+}
+
+
 export {
     DatabaseExceptions,
-    ValidationExceptions
+    ValidationExceptions,
+    BadGatewayExceptions
 }
