@@ -78,6 +78,17 @@ class ProductController {
         }
     }
 
+    async searchProduct(req,res,next) {
+        try{
+            const productQuery = req.query
+            const apiResponse = await ProductService.searchProductService(productQuery)
+            const contentMessage = `The Product has been Fetches`;
+            sendApiResponse(res,apiResponse,contentMessage,statusCode.ACCEPTED)
+        }catch(err){
+            next(err)
+        }
+    }
+
    
 
 }

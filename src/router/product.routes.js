@@ -9,13 +9,9 @@ productRouter.post('/product',verifyAuthToken,checkUserisActive,ProductControlle
 productRouter.get('/product',verifyAuthToken,checkUserisActive,ProductController.getAllProduct)
 productRouter.patch('/product/update/:corelationId',verifyAuthToken,checkUserisActive,ProductController.updateProduct)
 productRouter.patch('/product/delete/:corelationId',verifyAuthToken,checkUserisActive,ProductController.deleteProduct)
-
-productRouter.get('/product/search')
-
+productRouter.get('/product/search',verifyAuthToken,checkUserisActive,ProductController.searchProduct)
 productRouter.post('/product/wishlist/:productId/:corelationId',verifyAuthToken,checkUserisActive,ProductController.addProductToWishlist)
 productRouter.delete('/product/wishlist/delete/:productId/:corelationId/:wishListId',verifyAuthToken,checkUserisActive,ProductController.removeProductFromWishlist)
-
-
 productRouter.get('/product/review/:productId',verifyAuthToken,checkUserisActive,ProductReviewController.getProductReviews)
 productRouter.post('/product/review/:productId',verifyAuthToken,checkUserisActive,ProductReviewController.addReview)
 productRouter.delete('/product/review/:productId/:reviewId',verifyAuthToken,checkUserisActive,ProductReviewController.deleteReview)

@@ -232,6 +232,18 @@ class ProductService {
         }
     }
 
+    async searchProductService(productQuery){   
+        const productQueryArr = new Array(productQuery)
+        const products = await Product.find({
+            $and : productQueryArr
+        })
+        if(products && products.length.toString().startsWith('0')) {
+            throw new DatabaseExceptions(`Product are not available right now, Please Try again Later`,statusCode.BAD_REQUEST);
+        }
+        const filteredProduct = products.filter((data) => !data.isDeleted)
+        return filteredProduct
+    }
+
 
 }
 
