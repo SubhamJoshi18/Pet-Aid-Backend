@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { formmatedMongoose } from "../../../utils/mongooseUtils/formattedMongoose";
-import productImageSchema from "./productImage.schema";
+import { formmatedMongoose } from "../../../utils/mongooseUtils/formattedMongoose.js";
+import productImageSchema from "./productImage.schema.js";
 
 const productSchema = new mongoose.Schema({
 
@@ -49,7 +49,12 @@ const productSchema = new mongoose.Schema({
      },
     reviewProduct : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'ReviewProduct'
+        ref : 'ReviewProduct',
+    },
+
+    corelationId : {
+        type : String,
+        required : [true,formmatedMongoose('Co-RelationId')]
     }
 },
 {

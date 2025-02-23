@@ -9,6 +9,16 @@ const productCreateSchema = z.object({
 })
 
 
+const updateProductSchema = z.object({
+    name : z.string(),
+    description : z.string(),
+    category : z.string(),
+    price : z.number(),
+    tags : z.array(z.string()),
+})
+
+
 export {
-    productCreateSchema
+    productCreateSchema,
+    updateProductSchema
 }
