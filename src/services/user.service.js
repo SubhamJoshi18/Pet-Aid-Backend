@@ -137,7 +137,6 @@ class UserService {
         }
 
         const userDoc = userPromiseArr[0]['value']
-        const userProfileDoc = userPromiseArr[1]['value']
 
         const userDocId = userDoc._id.toString()
         

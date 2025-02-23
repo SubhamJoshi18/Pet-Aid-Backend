@@ -43,6 +43,10 @@ const productSchema = new mongoose.Schema({
         default: false, 
       },
 
+     isUpdated : {
+        type : Boolean,
+        default : false
+     },
     reviewProduct : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'ReviewProduct'
