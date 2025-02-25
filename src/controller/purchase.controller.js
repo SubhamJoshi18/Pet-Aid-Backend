@@ -29,6 +29,18 @@ class PurchaseController {
             next(err)
         }
     }
+
+
+    async getAllTransaction(req,res,next){
+        try{
+            const userId = req.user.userId
+            const apiResponse = await PurchaseService.getAllTransactionService(userId)
+            const contentMessage = `All the Transaction for the User`
+            sendApiResponse(res,apiResponse,contentMessage,statusCode.ACCEPTED);
+        }catch(err){
+            next(err)
+        }
+    }
 }
 
 

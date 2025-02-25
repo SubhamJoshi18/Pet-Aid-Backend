@@ -7,7 +7,7 @@ const purchaseRouter = Router()
 
 purchaseRouter.post('/purchase/:productId',verifyAuthToken,checkUserisActive,PurchaseController.purchaseProduct)
 purchaseRouter.get('/purchase',verifyAuthToken,checkUserisActive,PurchaseController.getAllPurchasedProduct)
-
+purchaseRouter.get('/purchase/transactions',verifyAuthToken,checkUserisActive,PurchaseController.getAllTransaction)
 
 
 export default purchaseRouter

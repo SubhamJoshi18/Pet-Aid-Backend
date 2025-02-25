@@ -92,6 +92,25 @@ class PurchaseService {
             purchasedProduct : filteredPurchasedProduct
         }
     }
+
+    async getAllTransactionService(userId){
+        const allUserTransaction = await Transaction.find({
+            transaction_by : userId
+        }).populate({
+            path : 'product_purchased'
+        })
+        const transactionPayload = allUserTransaction.map((data) => {
+            return {
+                amount : data.transaction_amount,
+                transaction_id : data.transaction_co_relation_id,
+                product_purchased : data.product_purchased,
+                transaction_date : data.transaction_issued_at
+            }
+        })
+        return {
+            transactions : transactionPayload
+        }
+    }
 }
 
 
