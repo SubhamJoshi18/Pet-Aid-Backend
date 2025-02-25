@@ -29,6 +29,17 @@ class OrderController {
         }
     }
 
+    async cancelOrder(req,res,next) {
+        try{
+            const orderId = req.params.orderId
+            const apiResponse = await OrderService.cancelOrderService(orderId)
+            const contentMessage = `The Order has been Cancelled`
+            sendApiResponse(res,apiResponse,contentMessage,statusCode.ACCEPTED)
+        }catch(err){
+            next(err)
+        }
+    }
+
 
 }
 

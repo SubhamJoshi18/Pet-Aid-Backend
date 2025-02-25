@@ -111,6 +111,45 @@ class OrderService {
                 orders : allOrderByUser
             }
     }
+
+    async cancelOrderService(orderId) {
+
+        const orderDoc = await Order.findOne({
+            uniqueOrderId : orderId
+        })
+
+        const orderStatus = orderDoc.delivery_status
+        const isAlreaadyDone = orderStatus.includes('Done')
+        if(isAlreaadyDone) throw new DatabaseExceptions(`The Order is already Done , Cannot be Cancel`,statusCode.BAD_REQUEST);
+
+        const updatedResult = await Order.updateOne(
+            {
+                uniqueOrderId : orderId
+            },
+            {   
+                delivery_status : 'Cancel'
+            },
+            {
+                $new : true
+            }
+        )
+
+        const validupdated = updatedResult.acknowledged && updatedResult.matchedCount > 0
+        
+        if(validupdated){
+            return {
+                message : `The Order Have Been Cancel`,
+                updatedResult
+            }
+        }else{
+            return {
+                message : `There is issue updating the delivery status`,
+                updatedResult : null
+            }
+        }
+
+    }
 }
+
 
 export default new OrderService()
