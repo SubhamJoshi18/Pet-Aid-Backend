@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { formmatedMongoose } from "../../utils/mongooseUtils/formattedMongoose";
+import { formmatedMongoose } from "../../utils/mongooseUtils/formattedMongoose.js";
 
 const tokenSchema = new mongoose.Schema({
 
