@@ -18,6 +18,17 @@ class OrderController {
         }
     }
 
+    async getAllUserProduct(req,res,next) {
+        try{
+            const userId = req.user.userId
+            const apiResposne = await OrderService.getAllUserProduct(userId)
+            const contentMessage = `All the User Orders`;
+            sendApiResponse(res,apiResposne,contentMessage,statusCode.ACCEPTED);
+        }catch(err){
+            next(err)
+        }
+    }
+
 
 }
 

@@ -1,4 +1,5 @@
 const subject = "Reset Your Password - Secure Your Account Today";
+const orderSubject = "Order Confirmation"
 
 const generateHtmlContent = (url) => {
 
@@ -86,7 +87,7 @@ return htmlContent
 
 
 
-const generateOrderHtmlContent = (url) => {
+const generateOrderHtmlContent = (productItem,trackProductUrl,orderId,productPrice) => {
 
     const htmlContent = `
 <<!DOCTYPE html>
@@ -152,21 +153,21 @@ const generateOrderHtmlContent = (url) => {
         <div class="content">
             <p>Hi there,</p>
             <p>Thank you for your purchase! Your order has been successfully placed. Below are the details of your order:</p>
-            <p><strong>Order Number:</strong> #${orderNumber}</p>
+            <p><strong>Order Number:</strong> #${orderId}</p>
             <p><strong>Items Ordered:</strong></p>
             <ul>
-                ${orderItems.map(item => `<li>${item.name} - ${item.quantity} x $${item.price}</li>`).join('')}
+                ${productItem.map(item => `<li>${item.name} - ${item.category} x $${item.price}</li>`).join('')}
             </ul>
-            <p><strong>Total Amount:</strong> $${totalPrice}</p>
+            <p><strong>Total Amount:</strong> $${productPrice}</p>
             <p>You can track your order status or manage your purchases by clicking the button below:</p>
             <p style="text-align: center;">
-                <a href="${orderTrackingUrl}" class="btn">Track Your Order</a>
+                <a href="${trackProductUrl}" class="btn">Track Your Order</a>
             </p>
             <p>We appreciate your trust in us. If you have any questions, feel free to reach out.</p>
             <p>Thank you,<br>The Pet Aid Team</p>
         </div>
         <div class="footer">
-            &copy; 2025 Shubham Uber. All rights reserved.
+            &copy; 2025  Pet Aid. All rights reserved.
         </div>
     </div>
 </body>
@@ -180,6 +181,7 @@ return htmlContent
 
 export {
     subject,
+    orderSubject,
     generateHtmlContent,
     generateOrderHtmlContent
 }

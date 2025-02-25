@@ -1,10 +1,12 @@
-import Transaction from "../database/schemas/orders/transaction.schema"
-import Product from "../database/schemas/products/product.schema"
-import User from "../database/schemas/user.schema"
-import { DatabaseExceptions } from "../exceptions"
+import Transaction from "../database/schemas/orders/transaction.schema.js"
+import Product from "../database/schemas/products/product.schema.js"
+import User from "../database/schemas/user.schema.js"
+import { DatabaseExceptions } from "../exceptions/index.js"
 import statusCode from 'http-status-codes'
 import crypto from 'crypto'
-import Order from "../database/schemas/orders/order.schema"
+import Order from "../database/schemas/orders/order.schema.js"
+import { generateOrderHtmlContent, orderSubject } from "../constants/smtp.js"
+import { sendEmail } from "../libs/smtp.js"
 
 class OrderService {
 
@@ -74,17 +76,41 @@ class OrderService {
             ]
         )
 
+        const productItems = new Array({
+            name : productDoc.name,
+            price : productDoc.price,
+            category : productDoc.category
+        })
+
+        const trackProductUrl = `http://localhost:3000/api/order`
+
+        const producthtmlContent = generateOrderHtmlContent(productItems,trackProductUrl,paymentHash,productPrice)
+
+        const sendEmailContent = await sendEmail(userDoc.email,orderSubject,`Order Confirmation For ${userDoc.fullName}`,producthtmlContent)
+
         const filteredRejection = dbPromiseArr.filter((data) => data.status !== 'fulfilled')
         
         if(Array.isArray(filteredRejection) && filteredRejection.length > 0) throw new DatabaseExceptions(`There is somse issue while updating or inserting the result`,statusCode.INTERNAL_SERVER_ERROR);
 
-        const orderDoc = dbPromiseArr[0]``
+        const orderDoc = dbPromiseArr[0]['value']
 
         return {
             order : orderDoc,
         }
     }
+    
 
+    async getAllUserProduct(userId){
+            const allOrderByUser = await Order.find({
+                order_by : userId
+            })
+
+            if(allOrderByUser && allOrderByUser.length === 0) throw new DatabaseExceptions(`The User Does not have any Order Product`,statusCode.BAD_REQUEST);
+
+            return {
+                orders : allOrderByUser
+            }
+    }
 }
 
 export default new OrderService()

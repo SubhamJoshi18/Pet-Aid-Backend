@@ -6,5 +6,6 @@ import OrderController from "../controller/order.controller.js";
 const orderRouter = Router()
 
 orderRouter.post('/order/:productId/:corelationId',verifyAuthToken,checkUserisActive,OrderController.orderProduct)
+orderRouter.get('/order',verifyAuthToken,checkUserisActive,OrderController.getAllUserProduct)
 
 export default orderRouter
