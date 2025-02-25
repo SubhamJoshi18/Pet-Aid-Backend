@@ -54,6 +54,12 @@ const productSchema = new mongoose.Schema({
     corelationId : {
         type : String,
         required : [true,formmatedMongoose('Co-RelationId')]
+    },
+
+    status : {
+        type : String,
+        enum : ['Idle','Pending','Purchased','Ongoing','Sold'],
+        default : 'Idle'      
     }
 },
 {
