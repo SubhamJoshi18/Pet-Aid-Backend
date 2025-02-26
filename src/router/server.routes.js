@@ -6,10 +6,11 @@ import userRouter from "./user.routes.js"
 import productRouter from "./product.routes.js"
 import purchaseRouter from "./purchase.routes.js"
 import orderRouter from "./order.routes.js"
+import riderRouter from "./rider.routes.js"
 
 const serverRouter = (expressApp) => {
 
-    expressApp.use('/api',[healthRouter,authRouter,userRouter,productRouter,purchaseRouter,orderRouter])
+    expressApp.use('/api',[healthRouter,authRouter,userRouter,productRouter,purchaseRouter,orderRouter,riderRouter])
 
     expressApp.use('*',handleNotFoundRoute)
     expressApp.use(globalErrorHandler)

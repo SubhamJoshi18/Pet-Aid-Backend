@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
         required : [true,'Phone Number is Required']
     },
 
+    isRider : {
+        type : Boolean,
+        default : false
+    },
     userProfile : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'UserProfile',

@@ -60,6 +60,16 @@ const productSchema = new mongoose.Schema({
         type : String,
         enum : ['Idle','Pending','Purchased','Ongoing','Sold'],
         default : 'Idle'      
+    },
+
+    location : {
+        country  : {
+            type : String
+        },
+
+        city : {
+            type : String
+        }
     }
 },
 {
