@@ -9,6 +9,6 @@ const riderRouter = Router()
 riderRouter.post('/rider/create',verifyAuthToken,checkUserisActive,RiderController.createRider);
 riderRouter.get('/rider/orders',verifyAuthToken,checkUserisActive,isRider,RiderController.getAllOrder);
 riderRouter.post('/rider/apply/:orderId',verifyAuthToken,checkUserisActive,isRider,RiderController.applyOrders)
-riderRouter.patch('/rider/complete/:orderId',verifyAuthToken,checkUserisActive,isRider)
+riderRouter.patch('/rider/complete/:orderId',verifyAuthToken,checkUserisActive,isRider,RiderController.completeRide)
 
 export default riderRouter

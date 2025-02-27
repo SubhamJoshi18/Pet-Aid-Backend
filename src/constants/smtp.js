@@ -367,10 +367,9 @@ const generateOrderCompleteContent = (orderId,productName,orderDate,productPrice
     </div>
 </body>
 </html>
-
-
-    
     `
+
+    return htmlContent
 }
 
 

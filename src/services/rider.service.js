@@ -183,7 +183,7 @@ class RiderService {
             ]
         )
 
-        const filteredUnRejected = Array.isArray(dbPromiseArr) ? dbPromiseArr.filter((data) => !data.status === 'rejected') : []
+        const filteredUnRejected = Array.isArray(dbPromiseArr) ? dbPromiseArr.filter((data) => data.status !== 'rejected') : []
         
         const validPromise = filteredUnRejected.length > 0
 
