@@ -88,13 +88,14 @@ class AuthServices {
         if(!checkEmailExists) {
             throw new DatabaseExceptions(`The Email : ${email} Does not Exists, Please Try again`,statusCode.BAD_REQUEST)
         }
-
+        
+   
         const extractedPayload = new Array(checkEmailExists).map((data) => {
             return {
                 userId : data._id,
                 fullName : data.fullName,
                 email : data.email,
-                role : data.userProfile.role,
+                isRider : data.isRider,
                 phoneNumber : data.phone
             }
         }).pop()

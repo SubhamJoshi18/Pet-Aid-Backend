@@ -69,9 +69,23 @@ class BadGatewayExceptions extends HttpException {
     }
 }
 
+class RoleExceptions extends HttpException {
+    message = ''
+    statusCode = 0
+
+    constructor(message,statusCode){
+        super(message,statusCode)
+        this.message = message
+        this.statusCode = statusCode
+        this.name = 'Role Exceptions'
+        Object.setPrototypeOf(this,new.target.prototype)
+    }
+}
+
 
 export {
     DatabaseExceptions,
     ValidationExceptions,
-    BadGatewayExceptions
+    BadGatewayExceptions,
+    RoleExceptions
 }

@@ -58,7 +58,7 @@ const productSchema = new mongoose.Schema({
 
     status : {
         type : String,
-        enum : ['Idle','Pending','Purchased','Ongoing','Sold'],
+        enum : ['Idle','Pending','Purchased','Ongoing','Sold','Delivering'],
         default : 'Idle'      
     },
 

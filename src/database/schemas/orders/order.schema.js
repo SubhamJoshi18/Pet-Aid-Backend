@@ -28,7 +28,7 @@ const orderSchema = new mongoose.Schema({
 
     delivery_status : {
         type : String,
-        enum : ['Cancel','Done','Ongoing','Idle'],
+        enum : ['Cancel','Done','Ongoing','Idle','Rider Delivering'],
         default : 'Idle'
     },
     

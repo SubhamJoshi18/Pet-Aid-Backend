@@ -11,7 +11,7 @@ class RiderController {
             const userId = req.user.userId
             const apiResponse = await RiderService.createRiderService(userId,content)
             const contentMessage = `The Rider has been Created`
-            sendApiResponse(res,apiResponse,contentMessage,`The Rider has been Created`)
+            sendApiResponse(res,apiResponse,contentMessage,statusCode.ACCEPTED)
         }catch(err){
             next(err)
         }
@@ -34,6 +34,18 @@ class RiderController {
             const apiResponse = await RiderService.applyOrders(orderId,userId)
             const contentMessage = `The Order is ongoing,Rider is delivering it`
             sendApiResponse(res,apiResponse,contentMessage,statusCode.ACCEPTED); 
+        }catch(err){
+            next(err)
+        }
+    }
+
+    async completeRide(req,res,next){
+        try{
+            const orderId = req.params.orderId
+            const userId = req.user.userId
+            const apiResponse = await RiderService.completeOrderRideService(orderId,userId)
+            const contentMessage = `The Order have been Completed`
+            sendApiResponse(res,apiResponse,contentMessage,statusCode.ACCEPTED);
         }catch(err){
             next(err)
         }
